@@ -1,0 +1,61 @@
+[gd_scene load_steps=13 format=3 uid="uid://coe5thf4lxkl3"]
+
+[ext_resource type="PackedScene" uid="uid://co5nl2gx08ouw" path="res://Chips/Chip.tscn" id="1_lpg5i"]
+[ext_resource type="Script" path="res://Chips/Pin.gd" id="2_voo4y"]
+
+[sub_resource type="Resource" id="Resource_gksfc"]
+script = ExtResource("2_voo4y")
+location = 0
+
+[sub_resource type="Resource" id="Resource_vkd1b"]
+script = ExtResource("2_voo4y")
+location = 2
+
+[sub_resource type="Resource" id="Resource_t6gfu"]
+script = ExtResource("2_voo4y")
+location = 0
+
+[sub_resource type="Resource" id="Resource_juhnb"]
+script = ExtResource("2_voo4y")
+location = 0
+
+[sub_resource type="Resource" id="Resource_a8eu7"]
+script = ExtResource("2_voo4y")
+location = 0
+
+[sub_resource type="Resource" id="Resource_6656j"]
+script = ExtResource("2_voo4y")
+location = 1
+
+[sub_resource type="Resource" id="Resource_w7ivd"]
+script = ExtResource("2_voo4y")
+location = 1
+
+[sub_resource type="Resource" id="Resource_h0g5f"]
+script = ExtResource("2_voo4y")
+location = 3
+
+[sub_resource type="Resource" id="Resource_5gxoj"]
+script = ExtResource("2_voo4y")
+location = 3
+
+[sub_resource type="Resource" id="Resource_xynyd"]
+script = ExtResource("2_voo4y")
+location = 3
+
+[node name="World" type="Node2D"]
+
+[node name="Chip" parent="." instance=ExtResource("1_lpg5i")]
+position = Vector2(425, 263)
+pins = Array[ExtResource("2_voo4y")]([SubResource("Resource_gksfc"), SubResource("Resource_vkd1b")])
+chip_type = 0
+
+[node name="Chip2" parent="." instance=ExtResource("1_lpg5i")]
+position = Vector2(225, 461)
+pins = Array[ExtResource("2_voo4y")]([SubResource("Resource_t6gfu"), SubResource("Resource_juhnb"), SubResource("Resource_a8eu7")])
+chip_type = 0
+
+[node name="Chip3" parent="." instance=ExtResource("1_lpg5i")]
+position = Vector2(687, 469)
+pins = Array[ExtResource("2_voo4y")]([SubResource("Resource_6656j"), SubResource("Resource_w7ivd"), SubResource("Resource_h0g5f"), SubResource("Resource_5gxoj"), SubResource("Resource_xynyd")])
+chip_type = 0

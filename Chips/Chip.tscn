@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://co5nl2gx08ouw"]
+
+[ext_resource type="Script" path="res://Chips/Chip.gd" id="1_1ywha"]
+
+[node name="Chip" type="Node2D"]
+script = ExtResource("1_1ywha")
+pins_left = null
+pins_right = null
+pins_top = null
+pins_bottom = null
+chip_type = null
