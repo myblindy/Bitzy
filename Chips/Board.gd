@@ -1,5 +1,5 @@
 @tool
-extends Node2D
+extends Control
 class_name Board
 
 @export var links: Array[Link] = []:
@@ -11,7 +11,8 @@ func _rebuild_links() -> void:
 	pass
 
 func child_chip_added(chip: Chip) -> void:
-	pass
+	chip.clicked.connect(func():
+		pass)
 
 func _ready() -> void:
 	pass # Replace with function body.

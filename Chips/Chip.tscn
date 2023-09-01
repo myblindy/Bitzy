@@ -2,10 +2,12 @@
 
 [ext_resource type="Script" path="res://Chips/Chip.gd" id="1_1ywha"]
 
-[node name="Chip" type="Node2D"]
+[node name="Chip" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 397.0
+offset_top = 323.0
+offset_right = 397.0
+offset_bottom = 323.0
 script = ExtResource("1_1ywha")
-pins_left = null
-pins_right = null
-pins_top = null
-pins_bottom = null
-chip_type = null
+caption = "CPU"

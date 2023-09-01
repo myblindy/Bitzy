@@ -1,21 +1,17 @@
 @tool
-extends Node2D
+extends Control
 class_name Chip
+
+signal clicked
 
 @export var pins: Array[Pin] = []:
 	set(new_pins):
 		pins = new_pins
-		_update_pin_geometry()
 		queue_redraw()
 		
 		for pin in pins:
 			if pin:
 				pin.changed.connect(func(): queue_redraw())
-		
-@export var size := Vector2(200, 100):
-	set(new_size):
-		size = new_size
-		queue_redraw()
 		
 func get_color() -> Color:
 	match(chip_type):
@@ -34,6 +30,11 @@ func get_color() -> Color:
 		caption = new_caption
 		notify_property_list_changed()
 		queue_redraw()
+		
+@export var bytes := PackedByteArray()
+
+const _hex_editor_scene := preload("res://Chips/HexEditor.tscn")
+var _hex_editor: HexEditor
 		
 func _get_new_caption() -> String:
 	var caption: String
@@ -61,7 +62,7 @@ var _font: Font
 
 func _draw_centered_string(font: Font, str: String, modulate_color: Color):
 	var string_size := font.get_string_size(str)
-	draw_string(font, -string_size / 2 + Vector2(0, font.get_ascent()), str, 0, -1, 16, modulate_color)
+	draw_string(font, -string_size / 2 + Vector2(0, font.get_ascent()) + size / 2, str, 0, -1, 16, modulate_color)
 
 var left_pins: Array[int] = []
 var top_pins: Array[int] = []
@@ -97,33 +98,33 @@ func _update_pin_geometry() -> void:
 	
 	i = 0
 	for pin_id in left_pins:
-		pin_locations[pin_id] = -size / 2 + Vector2(0, 5 + (size.y - 10) / (left_pins.size() + 1) * (i + 1))
-		i += 1		
+		pin_locations[pin_id] = Vector2(0, 5 + (size.y - 10) / (left_pins.size() + 1) * (i + 1))
+		i += 1
 
 	i = 0
 	for pin_id in right_pins:
-		pin_locations[pin_id] = Vector2(size.x, -size.y) / 2 + Vector2(0, 5 + (size.y - 10) / (right_pins.size() + 1) * (i + 1))
-		i += 1		
+		pin_locations[pin_id] = Vector2(size.x, 0) + Vector2(0, 5 + (size.y - 10) / (right_pins.size() + 1) * (i + 1))
+		i += 1
 
 	i = 0
 	for pin_id in top_pins:
-		pin_locations[pin_id] = -size / 2 + Vector2(5 + (size.x - 10) / (top_pins.size() + 1) * (i + 1), 0)
-		i += 1		
+		pin_locations[pin_id] = Vector2(5 + (size.x - 10) / (top_pins.size() + 1) * (i + 1), 0)
+		i += 1
 		
 	i = 0
 	for pin_id in bottom_pins:
-		pin_locations[pin_id] = Vector2(-size.x, size.y) / 2 + Vector2(5 + (size.x - 10) / (bottom_pins.size() + 1) * (i + 1), 0)
-		i += 1		
-
+		pin_locations[pin_id] = Vector2(0, size.y) + Vector2(5 + (size.x - 10) / (bottom_pins.size() + 1) * (i + 1), 0)
+		i += 1
 
 func _get_board() -> Board:
 	return get_parent() as Board
 
 func _draw() -> void:
+	_update_pin_geometry()
 	var color := get_color()
 			
 	_draw_centered_string(_font, caption, color)
-	draw_rect(Rect2(-size / 2, size), color, false, 2.0)
+	draw_rect(Rect2(Vector2.ZERO, size), color, false, 2.0)
 					
 	for pin_id in left_pins:
 		var base := pin_locations[pin_id]
@@ -153,3 +154,24 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	_font = Control.new().get_theme_default_font()
+	size = Vector2(200, 100)
+	
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and not event.canceled:
+		var event_local := make_input_local(event)
+		if not Rect2(Vector2.ZERO, size).has_point(event_local.position):
+			return
+		
+		# show editor
+		if not _hex_editor:
+			var board := _get_board()
+			
+			_hex_editor = _hex_editor_scene.instantiate()
+			_hex_editor.bind_chip(self)
+			_hex_editor.set_anchors_preset(PRESET_TOP_LEFT)
+			_hex_editor.size = Vector2(board.size * 0.9)
+			_hex_editor.position = board.position + board.size * 0.05
+			board.add_child(_hex_editor)
+		_hex_editor.show()
+		
+		clicked.emit()
