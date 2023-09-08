@@ -57,8 +57,6 @@ func _get_new_caption() -> String:
 					ok = false
 					break
 	return caption
-		
-var _font: Font
 
 func _draw_centered_string(font: Font, str: String, modulate_color: Color):
 	var string_size := font.get_string_size(str)
@@ -123,28 +121,28 @@ func _draw() -> void:
 	_update_pin_geometry()
 	var color := get_color()
 			
-	_draw_centered_string(_font, caption, color)
+	_draw_centered_string(Global.font, caption, color)
 	draw_rect(Rect2(Vector2.ZERO, size), color, false, 2.0)
 					
 	for pin_id in left_pins:
 		var base := pin_locations[pin_id]
 		draw_line(base - Vector2(5, 0), base + Vector2(5, 0), color, 2)
-		draw_string(_font, base + Vector2(10, 6), str(pin_id))
+		draw_string(Global.font, base + Vector2(10, 6), str(pin_id))
 				
 	for pin_id in right_pins:
 		var base := pin_locations[pin_id]
 		draw_line(base - Vector2(5, 0), base + Vector2(5, 0), color, 2)
-		draw_string(_font, base + Vector2(-20, 6), str(pin_id))
+		draw_string(Global.font, base + Vector2(-20, 6), str(pin_id))
 
 	for pin_id in top_pins:
 		var base := pin_locations[pin_id]
 		draw_line(base - Vector2(0, 5), base + Vector2(0, 5), color, 2)
-		draw_string(_font, base + Vector2(-5, 25), str(pin_id))
+		draw_string(Global.font, base + Vector2(-5, 25), str(pin_id))
 
 	for pin_id in bottom_pins:
 		var base := pin_locations[pin_id]
 		draw_line(base - Vector2(0, 5), base + Vector2(0, 5), color, 2)
-		draw_string(_font, base + Vector2(-5, -12), str(pin_id))
+		draw_string(Global.font, base + Vector2(-5, -12), str(pin_id))
 
 func _enter_tree() -> void:
 	caption = _get_new_caption()
@@ -153,7 +151,6 @@ func _enter_tree() -> void:
 		parent.child_chip_added(self)
 
 func _ready() -> void:
-	_font = Control.new().get_theme_default_font()
 	size = Vector2(200, 100)
 	
 func _input(event: InputEvent) -> void:

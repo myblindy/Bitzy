@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://duc3k2udqp03r"]
+[gd_scene load_steps=3 format=3 uid="uid://duc3k2udqp03r"]
 
 [ext_resource type="Script" path="res://Chips/HexEditor.gd" id="1_uuemp"]
+[ext_resource type="Script" path="res://Chips/HexEditorCursor.gd" id="2_el2gp"]
 
 [node name="HexEditor" type="Control"]
 layout_mode = 3
@@ -10,3 +11,53 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_uuemp")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0941176, 0.113725, 0.270588, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Spacer2" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Hex Editor"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CloseButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "X"
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+color = Color(0, 0.815686, 0.709804, 1)
+
+[node name="LinesContainer" type="Container" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Cursor" type="ColorRect" parent="VBoxContainer/LinesContainer"]
+layout_mode = 2
+script = ExtResource("2_el2gp")

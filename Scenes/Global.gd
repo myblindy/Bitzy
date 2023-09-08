@@ -1,5 +1,7 @@
 class_name Global
 
+const font: Font = preload("res://Fonts/FiraCode-Medium.woff2")
+
 enum ChipType { CPU }
 
 class IntMargin:

@@ -20,7 +20,7 @@ offset_top = 149.0
 offset_right = 428.0
 offset_bottom = 249.0
 caption = "CPU1"
-bytes = PackedByteArray()
+bytes = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
 [node name="Chip2" parent="Board" instance=ExtResource("1_lpg5i")]
 offset_left = 682.0
